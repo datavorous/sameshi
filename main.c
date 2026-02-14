@@ -16,7 +16,7 @@ void p(){
     }
 }
 int main(){
-    init();
+    I();
     char f[5];
     int t=1;
     while(1){
@@ -28,7 +28,7 @@ int main(){
             int d=(f[3]-'0'+1)*10+(f[2]-'a'+1);
             b[d]=b[s];b[s]=0;
         }else{
-            S(-1,4,-30000,30000);
+            S(-1,5,-30000,30000);
             b[bd]=b[bs];b[bs]=0;
         }
         t=-t;
