@@ -47,5 +47,16 @@ int n(int s, int d) {
 }
 
 int s(int s, int d, int a, int b) {
+    if (d==0) {
+        return s * e();
+    }
+    for(int src=21; src<=98; src++) {
+        int p = b[src];
+        if (p == 7 || p==0) continue;
+        if ((p>0 && s<0) || (p<0 && s>0)) continue;
 
+        if(abs(p) == 1) {}
+        else {}
+    }
+    return a;
 }
