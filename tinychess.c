@@ -25,31 +25,13 @@ int N[]={-21,-19,-12,-8,8,12,19,21}, K[]={-1,1,-10,10,-11,-9,9,11};
 
 int bs, bd;
 
-int n(int s, int d) {
-    if (d==0) return s * e();
-
-    int ms = -20000;
-    /* 
-    for each move
-        make move
-        score = -n(-s, d-1)
-        undo move
-        if score > ms then ms = score
-    return ms
-    */
-}
-
 int S(int s, int d, int a, int be) {
     if (d==0) {
         int sc = 0;
         for(int i = 21; i <= 98; i++)
             if (b[i] != 7) sc += (b[i] > 0 ? v[b[i]] : -v[-b[i]]);
-        return sc * e();
+        return sc * s;
     }
-
-    int oa = a;
-    int bm = 0;
-
 
     for(int src=21; src<=98; src++) {
         int p = b[src];
@@ -78,6 +60,22 @@ int S(int s, int d, int a, int be) {
                     }}
                 if (a >= be) return be;
 
+                if (((s==1 && src<40) || (s==-1 && src>70)) && b[src + 2*dir] == 0) {
+                    t = src + 2*dir;
+                    b[t] = p;
+                    b[src] = 0;
+
+                    score = -S(-s, d-1, -be, -a);
+                    b[src] = p;
+                    b[t] = 0;
+
+                    if (score > a) {a = score;
+                        if (d==4) {
+                            bs = src;
+                            bd = t;
+                        }}
+                    if (a >= be) return be;
+                }
 
             }
             for(int i=-1; i<=1; i+= 2) {
@@ -100,7 +98,40 @@ int S(int s, int d, int a, int be) {
                 }
             }
         }
-        else {}
+        else {
+
+            int st = (abs(p) == 4)?0:4;
+            int en = ((abs(p)==3)?4:8);
+
+            if (abs(p) == 2 || abs(p) == 5 || abs(p) == 6){
+                st = 0; en = 8;
+            }
+
+            for(int i = st; i<en; i++) {
+                int dir = vec[i];
+                int t = src;
+                while(1) {
+                    t += dir;
+                    int target = b[t];
+                    if (target == 7) break;
+                    if (target!=0 && (target>0) == (s>0)) break;
+
+                    b[t] = p;
+                    b[src] = 0;
+                    int sc = -S(-s, d-1, -be, -a);
+                    b[src] = p;
+                    b[t] = target;
+                    if (sc > a) {a = sc;
+                        if (d==4) {
+                            bs = src;
+                            bd = t;
+                        }}
+                    if (a >= be) return be;
+
+                    if (target != 0 || abs(p) == 2 || abs(p) == 6) break;
+                }
+            }
+        }
     }
     return a;
 }
