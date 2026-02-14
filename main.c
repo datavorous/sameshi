@@ -8,7 +8,7 @@ void p(){
         printf("%d ",r-1);
         for(int c=1;c<=8;c++){
             int q=b[r*10+c];
-            char s=".PNBRQK"[abs(q)];
+            char s=".PNBRQK"[j(q)];
             if(q<0)s+=32;
             printf("%c ",s);
         }
