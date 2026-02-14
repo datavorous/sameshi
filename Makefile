@@ -1,11 +1,14 @@
-CC = gcc
-CFLAGS = -Wall -Wextra -O2 -std=c99
-LDLIBS = -lm
+CC=gcc
+CFLAGS=-Wall -O2 -std=c99 -s -Wno-unused-result
+LDFLAGS=-lm
 
-tinychess: main.o
+all: tinychess
+
+tinychess: main.c tinychess.h
+	$(CC) $(CFLAGS) main.c -o tinychess $(LDFLAGS)
 
 run: tinychess
 	./tinychess
 
 clean:
-	rm -f tinychess *.o
+	rm -f tinychess

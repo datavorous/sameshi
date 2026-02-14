@@ -1,29 +1,17 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
-#include <math.h>
+#define abs(x) ((x)<0?-(x):(x))
 
 int b[120];
-
-const int is[120] = {
-    7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
-    7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
-    7, 4, 2, 3, 5, 6, 3, 2, 4, 7,
-    7, 1, 1, 1, 1, 1, 1, 1, 1, 7,
-    7, 0, 0, 0, 0, 0, 0, 0, 0, 7,
-    7, 0, 0, 0, 0, 0, 0, 0, 0, 7,
-    7, 0, 0, 0, 0, 0, 0, 0, 0, 7,
-    7, 0, 0, 0, 0, 0, 0, 0, 0, 7,
-    7,-1,-1,-1,-1,-1,-1,-1,-1, 7,
-    7,-4,-2,-3,-5,-6,-3,-2,-4, 7,
-    7, 7, 7, 7, 7, 7, 7, 7, 7, 7,
-    7, 7, 7, 7, 7, 7, 7, 7, 7, 7
-};
-
-const int v[] = {0, 100, 300, 305, 500, 900, 20000};
+const int v[] = {0,1,3,3,5,9,99};
 int N[]={-21,-19,-12,-8,8,12,19,21}, K[]={-1,1,-10,10,-11,-9,9,11};
 
 int bs, bd;
+
+void init() {
+    for(int i=0; i<120; i++) {
+        int r=i/10,c=i%10;
+        b[i] = (r<2||r>9||c<1||c>8)?7:(r==3?1:r==8?-1:r==2?"42356324"[c-1]-'0':r==9?-("42356324"[c-1]-'0'):0);
+}}
 
 int S(int s, int d, int a, int be) {
     if (d==0) {
@@ -38,8 +26,6 @@ int S(int s, int d, int a, int be) {
         if (p == 7 || p==0 || (p>0 && s<0) || (p<0 && s>0)) continue;
 
         int *vec = (abs(p) == 2)?N:K;
-        int len = 8;
-        if (abs(p) == 1) len = 0;
 
         if(abs(p) == 1) {
             int dir = (s == 1)? 10:-10;
@@ -100,8 +86,12 @@ int S(int s, int d, int a, int be) {
         }
         else {
 
-            int st = (abs(p) == 4)?0:4;
-            int en = ((abs(p)==3)?4:8);
+            // int st = (abs(p) == 4)?0:4;
+            // fuck int en = ((abs(p)==3)?4:8);
+            int st, en;
+            if(abs(p)==4) {st =0; en =4;}
+            else if (abs(p)==3) {st =4; en = 8;}
+            else {st = 0; en = 8;}
 
             if (abs(p) == 2 || abs(p) == 5 || abs(p) == 6){
                 st = 0; en = 8;
