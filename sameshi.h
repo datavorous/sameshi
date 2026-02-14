@@ -13,6 +13,16 @@ void init() {
         b[i] = (r<2||r>9||c<1||c>8)?7:(r==3?1:r==8?-1:r==2?"42356324"[c-1]-'0':r==9?-("42356324"[c-1]-'0'):0);
 }}
 
+int S(int s, int d, int a, int be);
+
+int E(int s,int d,int a,int be,int src,int t,int p,int capt){
+    b[t]=p;b[src]=0;
+    int sc=-S(-s,d-1,-be,-a);
+    b[src]=p;b[t]=capt;
+    if(sc>a){a=sc;if(d==4)bs=src,bd=t;}
+    return a>=be?be:a;
+}
+
 int S(int s, int d, int a, int be) {
     if (d==0) {
         int sc = 0;
@@ -25,41 +35,17 @@ int S(int s, int d, int a, int be) {
         int p = b[src];
         if (p == 7 || p==0 || (p>0 && s<0) || (p<0 && s>0)) continue;
 
-        int *vec = (abs(p) == 2)?N:K;
-
         if(abs(p) == 1) {
             int dir = (s == 1)? 10:-10;
             
             if (b[src + dir] == 0) {
                 int t = src + dir;
-                b[t] = p;
-                b[src] = 0;
-
-                int score = -S(-s, d-1, -be, -a);
-                b[src] = p;
-                b[t] = 0;
-
-                if (score > a) {a = score;
-                    if (d==4) {
-                        bs = src;
-                        bd = t;
-                    }}
+                a = E(s,d,a,be,src,t,p,0);
                 if (a >= be) return be;
 
                 if (((s==1 && src<40) || (s==-1 && src>70)) && b[src + 2*dir] == 0) {
                     t = src + 2*dir;
-                    b[t] = p;
-                    b[src] = 0;
-
-                    score = -S(-s, d-1, -be, -a);
-                    b[src] = p;
-                    b[t] = 0;
-
-                    if (score > a) {a = score;
-                        if (d==4) {
-                            bs = src;
-                            bd = t;
-                        }}
+                    a = E(s,d,a,be,src,t,p,0);
                     if (a >= be) return be;
                 }
 
@@ -68,32 +54,22 @@ int S(int s, int d, int a, int be) {
                 if (b[src+i+dir]!=0 && b[src+i+dir] != 7 && (b[src+dir+i]>0) != (s>0)) {
                     int t = src + dir + i;
                     int capt = b[t];
-                    b[t] = p; 
-                    b[src] = 0;
-
-                    int score = -S(-s, d-1, -be, -a);
-                    b[src] = p;
-                    b[t] = capt;
-
-                    if (score > a) {a = score;
-                        if (d==4) {
-                            bs = src;
-                            bd = t;
-                        }}
+                    a = E(s,d,a,be,src,t,p,capt);
                     if (a >= be) return be;
                 }
             }
         }
         else {
-
-            // int st = (abs(p) == 4)?0:4;
-            // fuck int en = ((abs(p)==3)?4:8);
+            int *vec = K;
             int st, en;
-            if(abs(p)==4) {st =0; en =4;}
-            else if (abs(p)==3) {st =4; en = 8;}
-            else {st = 0; en = 8;}
-
-            if (abs(p) == 2 || abs(p) == 5 || abs(p) == 6){
+            if (abs(p) == 2) {
+                vec = N;
+                st = 0; en = 8;
+            } else if(abs(p)==4) {
+                st =0; en =4;
+            } else if (abs(p)==3) {
+                st =4; en = 8;
+            } else {
                 st = 0; en = 8;
             }
 
@@ -106,16 +82,7 @@ int S(int s, int d, int a, int be) {
                     if (target == 7) break;
                     if (target!=0 && (target>0) == (s>0)) break;
 
-                    b[t] = p;
-                    b[src] = 0;
-                    int sc = -S(-s, d-1, -be, -a);
-                    b[src] = p;
-                    b[t] = target;
-                    if (sc > a) {a = sc;
-                        if (d==4) {
-                            bs = src;
-                            bd = t;
-                        }}
+                    a = E(s,d,a,be,src,t,p,target);
                     if (a >= be) return be;
 
                     if (target != 0 || abs(p) == 2 || abs(p) == 6) break;
