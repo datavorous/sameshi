@@ -46,16 +46,45 @@ int n(int s, int d) {
     */
 }
 
-int s(int s, int d, int a, int b) {
+int S(int s, int d, int a, int be) {
     if (d==0) {
         return s * e();
     }
     for(int src=21; src<=98; src++) {
         int p = b[src];
-        if (p == 7 || p==0) continue;
-        if ((p>0 && s<0) || (p<0 && s>0)) continue;
+        if (p == 7 || p==0 || (p>0 && s<0) || (p<0 && s>0)) continue;
 
-        if(abs(p) == 1) {}
+        if(abs(p) == 1) {
+            int dir = (s == 1)? 10:-10;
+            
+            int t = src + dir;
+            if (b[t] == 0) {
+                b[t] = p;
+                b[src] = 0;
+
+                int score = -S(-s, d-1, -be, -a);
+                b[src] = p;
+                b[t] = 0;
+
+                if (score > a) a = score;
+                if (a >= be) return be;
+            }
+            for(int i=-1; i<=1; i+= 2) {
+                if (   b[src+i+dir]!=0 &&  b[src+i+dir] != 7 && (b[src+dir+i]>0) != (s>0)) {
+                    int t = src + dir + i;
+                    int capt = b[t];
+                    b[t] = p; 
+                    b[src] = 0;
+
+                    int score = -S(-s, d-1, -be, -a);
+                    b[src] = p;
+                    b[t] = capt;
+
+                    if (score > a) a = score;
+                    if (a >= be) return be;
+                }
+            }
+        }
         else {}
     }
     return a;
