@@ -1,5 +1,7 @@
 # sameshi
 
+[Watch Demo Video](https://www.youtube.com/watch?v=OkoIb1OAheE)
+
 A minimal chess engine supporting a constrained subset of the game.
 
 `sameshi.h`: 1.95 KB
