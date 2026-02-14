@@ -2,7 +2,7 @@
 
 A minimal chess engine supporting a constrained subset of the game.
 
-`sameshi.h`: 2.06 KB
+`sameshi.h`: 1.95 KB
 
 ## core
 
