@@ -2,13 +2,12 @@ CC=gcc
 CFLAGS=-Wall -O2 -std=c99 -s -Wno-unused-result
 LDFLAGS=-lm
 
-all: tinychess
+all: sameshi
 
-tinychess: main.c tinychess.h
-	$(CC) $(CFLAGS) main.c -o tinychess $(LDFLAGS)
+sameshi: main.c sameshi.h
+	$(CC) $(CFLAGS) main.c -o sameshi $(LDFLAGS)
 
-run: tinychess
-	./tinychess
-
+run: sameshi
+	./sameshi
 clean:
-	rm -f tinychess
+	rm -f sameshi

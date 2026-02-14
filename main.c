@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "tinychess.h"
+#include "sameshi.h"
 
 extern int b[120],bs,bd;
 void p(){
