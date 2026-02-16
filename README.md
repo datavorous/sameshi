@@ -1,6 +1,7 @@
 # sameshi
 
-[Watch Demo Video](https://www.youtube.com/watch?v=OkoIb1OAheE)
+![full_video](https://github.com/user-attachments/assets/6c7b4f16-c16d-488c-b068-7fa48a61c655)
+
 
 A minimal chess engine supporting a constrained subset of the game.
 
